@@ -41,4 +41,23 @@ public class EmployeeService {
     public boolean isPhoneUnique(Long phone) {
         return !employeeRepo.existsByEmployeePhone(phone);
     }
+
+    public List<Employee> getfilterPoleAndSortedEmployees(String filterPole, String sort) {
+        if ("".equals(filterPole) && "".equals(sort)){
+            return null;
+        }
+
+        if ("".equals(filterPole)){
+            if ("asc".equals(sort)) {
+                return employeeRepo.findAllByOrderByFirstNameAsc();
+            } else if ("desc".equals(sort)) {
+                return employeeRepo.findAllByOrderByFirstNameDesc();
+            }
+        }
+        if ("".equals(sort)){
+            return employeeRepo.findByPoleOrderByFirstNameAsc(filterPole);
+        }
+
+        return null;
+    }
 }

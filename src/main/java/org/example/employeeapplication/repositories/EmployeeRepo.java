@@ -1,6 +1,7 @@
 package org.example.employeeapplication.repositories;
 
 import org.example.employeeapplication.entities.Employee;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,4 +17,12 @@ public interface EmployeeRepo extends CrudRepository<Employee, Long>{
     boolean existsByEmail(String email);
 
     boolean existsByEmployeePhone(Long employeePhone);
+
+
+    List<Employee> findAllByOrderByFirstNameAsc();
+    List<Employee> findAllByOrderByFirstNameDesc();
+
+    Object findAll(Sort ascending);
+
+    List<Employee> findByPoleOrderByFirstNameAsc(String filterPole);
 }

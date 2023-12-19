@@ -50,6 +50,15 @@ public class HomeController {
         return "redirect:/";
     }
 
+    @PostMapping("/filter")
+    public String filter(@RequestParam String trie, @RequestParam String filterPole, Model model) {
+
+        List<Employee> employees = employeeService.getfilterPoleAndSortedEmployees(filterPole, trie);
+        System.out.println(employees);
+        model.addAttribute("employees", employees);
+        return "home";
+    }
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String showEmployees(Model model) {
         List<Employee> employees = employeeService.getAllEmployees();
@@ -60,7 +69,6 @@ public class HomeController {
     @GetMapping("/search")
     public ResponseEntity<List<Employee>> search(@RequestParam String term) {
         List<Employee> employees = employeeService.searchByName(term);
-
         return ResponseEntity.ok(employees);
     }
 

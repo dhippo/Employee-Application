@@ -76,48 +76,74 @@
 
     <div id="show-employee" class="w-full my-8 p-6 border border-gray-200 rounded-lg shadow-md">
         <h2 class="text-2xl font-bold underline mb-6">Voir la liste des employés!</h2>
-<%--        <form action="/search" method="post" class="space-y-4">--%>
-            <div class="flex justify-between items-center mb-6">
-                <div class="relative">
-                    <input type="search" id="search" placeholder="Recherche" class="bg-cyan-400 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <div class="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
-                        <img src="/assets/search.png" alt="search" class="w-5">
-                    </div>
+        <div class="flex justify-between items-center mb-6">
+            <div class="relative w-1/2">
+                <input type="search" id="search" placeholder="Rechercher" class="bg-cyan-400 border border-gray-300 text-neutral-400 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-60 pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <div class="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
+                    <img src="/assets/search.png" alt="search" class="w-5">
                 </div>
             </div>
-            <div id="search-results" class="flex flex-col space-y-4 w-300">
-            </div>
-            <table class="min-w-full leading-normal">
-                <thead>
+
+
+            <form action="/filter" method="post" class="space-y-4">
+<%--                file deroulante--%>
+                <div class="flex space-x-3">
+                    <select name="filterPole" class="px-3 py-2 w-40 border dark:bg-gray-700 border-gray-300 text-neutral-400 rounded-md focus:outline-none focus:ring focus:border-blue-500">
+                        <option value="" >Slectionner</option>
+                        <option value="Autre" >Autre</option>
+                        <option value="commercial" >Commercial et Marketing</option>
+                        <option value="financial" >Financier</option>
+                        <option value="operations" >Opérations et Production</option>
+                        <option value="humanResources" >Ressources Humaines (RH)</option>
+                        <option value="researchDevelopment" >Recherche et Développement (R&D) / Innovation</option>
+                    </select>
+
+                    <select name="trie" class="px-3 py-2 border dark:bg-gray-700 text-neutral-400 border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500">
+                        <option value="" >Trier</option>
+                        <option value="asc" >Croissant</option>
+                        <option value="desc" >Decroissant</option>
+                    </select>
+
+                    <button type="submit" class="bg-orange-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700">Valider</button>
+                </div>
+
+            </form>
+
+
+
+        </div>
+        <div id="search-results" class="flex flex-col space-y-4 w-300">
+        </div>
+        <table class="min-w-full leading-normal">
+            <thead>
+            <tr>
+                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Numéro de tél</th>
+                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Prénom</th>
+                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Nom</th>
+                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Email</th>
+                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Date d'embauche</th>
+                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Pole d'activité</th>
+                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Rôle</th>
+                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">DELETE</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach items="${employees}" var="employee" varStatus="loop">
                 <tr>
-                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Numéro de tél</th>
-                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Prénom</th>
-                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Nom</th>
-                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Email</th>
-                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Date d'embauche</th>
-                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Pole d'activité</th>
-                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Rôle</th>
-                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">DELETE</th>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">${employee.employeePhone}</td>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">${employee.firstName}</td>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">${employee.lastName}</td>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">${employee.email}</td>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">${employee.hireDate}</td>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">${employee.pole}</td>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">${employee.role}</td>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm"><a class="text-white bg-red-500 p-2">todo: delete</a></td>
 
                 </tr>
-                </thead>
-                <tbody>
-                <c:forEach items="${employees}" var="employee" varStatus="loop">
-                    <tr>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">${employee.employeePhone}</td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">${employee.firstName}</td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">${employee.lastName}</td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">${employee.email}</td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">${employee.hireDate}</td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">${employee.pole}</td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">${employee.role}</td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm"><a class="text-white bg-red-500 p-2">todo: delete</a></td>
-
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-<%--        </form>--%>
+            </c:forEach>
+            </tbody>
+        </table>
     </div>
 
 
