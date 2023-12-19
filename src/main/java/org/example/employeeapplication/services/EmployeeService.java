@@ -29,4 +29,12 @@ public class EmployeeService {
         employeeRepo.findAll().forEach(employees::add);
         return employees;
     }
+
+    public Employee login(String email, String password) {
+        Employee employee = employeeRepo.findByEmail(email);
+        if (employee != null && employee.getPassword().equals(password)) {
+            return employee;
+        }
+        return null;
+    }
 }
