@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.SimpleDateFormat;
 import java.sql.Date;
@@ -41,6 +42,32 @@ public class HomeController {
         List<Employee> employees = employeeService.getAllEmployees();
         model.addAttribute("employees", employees);
         return "home";
+    }
+
+    @GetMapping("/employee/edit/{id}")
+    public String showUpdateForm(@PathVariable("id") Long id, Model model) {
+        Employee employee = employeeService.findEmployeeById(id);
+        if (employee == null) {
+            return "errorPage";
+        }
+        model.addAttribute("employee", employee);
+        return "updateEmployee";
+    }
+
+    @PostMapping("/employee/update")
+    public String updateEmployee(@ModelAttribute("employee") Employee employee) {
+        employeeService.updateEmployee(employee);
+        return "redirect:/";
+    }
+    @GetMapping("/employee/delete/{id}")
+    public String deleteEmployee(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        try {
+            employeeService.deleteEmployeeById(id);
+            redirectAttributes.addFlashAttribute("successMessage", "Employé correctement supprimé");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Erreur pendant la suppression de l'employé");
+        }
+        return "redirect:/";
     }
 
 }

@@ -37,4 +37,15 @@ public class EmployeeService {
         }
         return null;
     }
+    public Employee findEmployeeById(Long id) {
+        return employeeRepo.findById(id).orElse(null);
+    }
+
+    public Employee updateEmployee(Employee employee) {
+        // Assuming the employee with the given ID already exists
+        return employeeRepo.save(employee);
+    }
+    public void deleteEmployeeById(Long id) {
+        employeeRepo.deleteById(id);
+    }
 }

@@ -6,6 +6,13 @@
 <head>
     <title>Application Employees</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script type="text/javascript">
+        function confirmDelete(employeeId) {
+            if(confirm("Are you sure you want to delete this employee?")) {
+                window.location.href = "/employee/delete/" + employeeId;
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -54,6 +61,7 @@
                 <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Email</th>
                 <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Date d'embauche</th>
                 <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Rôle</th>
+                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Update</th>
                 <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">DELETE</th>
 
 
@@ -68,7 +76,12 @@
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">${employee.email}</td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">${employee.hireDate}</td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">${employee.role}</td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm"><a class="text-white bg-red-500 p-2">todo: delete</a></td>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm"><a href="/employee/edit/${employee.id}" class="text-white bg-blue-500 p-2">Edit</a></td>
+                    <td>
+                        <button onclick="confirmDelete('${employee.id}')" class="text-red-500 hover:text-red-700">
+                            Delete
+                        </button>
+                    </td>
 
                 </tr>
             </c:forEach>
