@@ -1,13 +1,13 @@
 package org.example.employeeapplication.entities;
-import jakarta.persistence.Table;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.management.relation.Role;
-import java.sql.Date;
+import org.example.employeeapplication.entities.Role;
 
+import java.sql.Date;
 
 @Entity
 @Data
@@ -39,9 +39,29 @@ public class Employee {
     @Column(name = "hire_date", nullable = false)
     private Date hireDate;
 
-    @Column(name = "role", nullable = false)
-    private String role;
 
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id", referencedColumnName = "role_id")
+    private Role role;
+
+
+    // Getter and Setter for email
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    // Getter and Setter for password
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
 }

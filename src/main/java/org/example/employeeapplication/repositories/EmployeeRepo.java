@@ -9,7 +9,9 @@ import java.util.List;
 
 @Repository
 public interface EmployeeRepo extends CrudRepository<Employee, Long>{
+    Employee findByEmail(String email);
 
+    Employee findByEmailAndPassword(String email, String password);
 
     List<Employee> findByFirstNameContainingIgnoreCase(String term);
 }

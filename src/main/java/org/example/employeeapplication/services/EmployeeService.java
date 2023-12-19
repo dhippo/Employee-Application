@@ -33,4 +33,8 @@ public class EmployeeService {
     public List<Employee> searchByName(String term) {
         return employeeRepo.findByFirstNameContainingIgnoreCase(term);
     }
+
+    public Employee login(String email, String password) {
+        return employeeRepo.findByEmailAndPassword(email, password);
+    }
 }
