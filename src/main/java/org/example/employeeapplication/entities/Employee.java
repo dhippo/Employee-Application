@@ -21,8 +21,8 @@ public class Employee {
     @Column(name = "employee_id")
     private Long id;
 
-    @Column(name = "employee_number", unique = true, nullable = false)
-    private String employeeNumber;
+    @Column(name = "employee_phone", unique = true, nullable = false)
+    private Long employeePhone;
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -39,9 +39,14 @@ public class Employee {
     @Column(name = "hire_date", nullable = false)
     private Date hireDate;
 
+    @Column(name = "pole", nullable = false)
+    private String pole;
+
     @Column(name = "role", nullable = false)
     private String role;
 
+    @Column(name = "admin", nullable = false)
+    private boolean admin;
 
 
 }

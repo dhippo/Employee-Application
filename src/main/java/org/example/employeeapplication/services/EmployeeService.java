@@ -33,4 +33,12 @@ public class EmployeeService {
     public List<Employee> searchByName(String term) {
         return employeeRepo.findByFirstNameContainingIgnoreCase(term);
     }
+
+    public boolean isEmailUnique(String email) {
+        return !employeeRepo.existsByEmail(email);
+    }
+
+    public boolean isPhoneUnique(Long phone) {
+        return !employeeRepo.existsByEmployeePhone(phone);
+    }
 }

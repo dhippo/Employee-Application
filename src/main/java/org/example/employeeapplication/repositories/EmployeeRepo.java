@@ -12,4 +12,8 @@ public interface EmployeeRepo extends CrudRepository<Employee, Long>{
 
 
     List<Employee> findByFirstNameContainingIgnoreCase(String term);
+
+    boolean existsByEmail(String email);
+
+    boolean existsByEmployeePhone(Long employeePhone);
 }

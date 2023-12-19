@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.SimpleDateFormat;
 import java.sql.Date;
@@ -20,18 +21,31 @@ public class HomeController {
 
 
     @PostMapping("/addEmployee")
-    public String addEmployee(@RequestParam String employeeNumber,
+    public String addEmployee(@RequestParam Long employeePhone,
                               @RequestParam String firstName,
                               @RequestParam String lastName,
                               @RequestParam String email,
                               @RequestParam String password,
                               @RequestParam String hireDate,
-                              @RequestParam String role) throws Exception {
+                              @RequestParam String pole,
+                              @RequestParam String role,
+                              RedirectAttributes redirectAttributes
+    ) throws Exception {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date parsedDate = formatter.parse(hireDate);
         java.sql.Date sqlDate = new java.sql.Date(parsedDate.getTime());
 
-        Employee newEmployee = new Employee(null, employeeNumber, firstName, lastName, email, password, sqlDate, role);
+//      Verifier si le numero de telephone ou l'email existe deja dans la base de donnees
+        if (!employeeService.isEmailUnique(email)) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Votre mail existe déjà !");
+            return "redirect:/";
+        }
+        if (!employeeService.isPhoneUnique(employeePhone)) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Votre numéro de téléphone existe déjà !");
+            return "redirect:/";
+        }
+
+        Employee newEmployee = new Employee(null, employeePhone, firstName, lastName, email, password, sqlDate, pole, role, false);
         employeeService.addEmployee(newEmployee);
         return "redirect:/";
     }
