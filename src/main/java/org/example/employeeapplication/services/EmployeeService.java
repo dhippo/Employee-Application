@@ -29,4 +29,8 @@ public class EmployeeService {
         employeeRepo.findAll().forEach(employees::add);
         return employees;
     }
+
+    public List<Employee> searchByName(String term) {
+        return employeeRepo.findByFirstNameContainingIgnoreCase(term);
+    }
 }

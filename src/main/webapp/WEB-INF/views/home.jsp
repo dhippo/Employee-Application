@@ -6,6 +6,12 @@
 <head>
     <title>Application Employees</title>
     <script src="https://cdn.tailwindcss.com"></script>
+<%--    backgroun color black--%>
+<style>
+    body {
+        background-color: grey;
+    }
+</style>
 </head>
 
 <body>
@@ -42,41 +48,72 @@
         </form>
     </div>
 
-    <div id="show-employee" class="w-full  my-8 p-6 border border-gray-200 rounded-lg shadow-md">
+    <div id="show-employee" class="w-full my-8 p-6 border border-gray-200 rounded-lg shadow-md">
         <h2 class="text-2xl font-bold underline mb-6">Voir la liste des employés!</h2>
-
-        <table class="min-w-full leading-normal">
-            <thead>
-            <tr>
-                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Numéro</th>
-                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Prénom</th>
-                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Nom</th>
-                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Email</th>
-                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Date d'embauche</th>
-                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Rôle</th>
-                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">DELETE</th>
-
-
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach items="${employees}" var="employee" varStatus="loop">
+<%--        <form action="/search" method="post" class="space-y-4">--%>
+            <div class="flex justify-between items-center mb-6">
+                <div class="relative">
+                    <input type="search" id="search" placeholder="Recherche" class="bg-cyan-400 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <div class="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
+                        <img src="/assets/search.png" alt="search" class="w-5">
+                    </div>
+                </div>
+            </div>
+            <div id="search-results" class="flex flex-col space-y-4 w-300">
+            </div>
+            <table class="min-w-full leading-normal">
+                <thead>
                 <tr>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">${employee.employeeNumber}</td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">${employee.firstName}</td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">${employee.lastName}</td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">${employee.email}</td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">${employee.hireDate}</td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">${employee.role}</td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm"><a class="text-white bg-red-500 p-2">todo: delete</a></td>
+                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Numéro</th>
+                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Prénom</th>
+                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Nom</th>
+                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Email</th>
+                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Date d'embauche</th>
+                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Rôle</th>
+                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">DELETE</th>
 
                 </tr>
-            </c:forEach>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <c:forEach items="${employees}" var="employee" varStatus="loop">
+                    <tr>
+                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">${employee.employeeNumber}</td>
+                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">${employee.firstName}</td>
+                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">${employee.lastName}</td>
+                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">${employee.email}</td>
+                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">${employee.hireDate}</td>
+                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">${employee.role}</td>
+                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm"><a class="text-white bg-red-500 p-2">todo: delete</a></td>
+
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+<%--        </form>--%>
     </div>
 
 
 </div>
 </body>
 </html>
+
+<script>
+    document.getElementById('search').addEventListener('input', function(e) {
+        var searchTerm = e.target.value;
+        var resultsDiv = document.getElementById('search-results');
+
+        if(searchTerm.length > 0) {
+            fetch('/search?term=' + encodeURIComponent(searchTerm))
+                .then(response => response.json())
+                .then(data => {
+                    resultsDiv.innerHTML = '';
+                    data.forEach(emp => {
+                        resultsDiv.innerHTML += '<div class="bg-blue-200 p-4 rounded-lg shadow-md">'+ emp["firstName"] +'</div>';
+                    });
+                })
+                // .catch(error => console.error('Error:', error));
+        }else {
+            resultsDiv.innerHTML = '';
+        }
+    });
+</script>

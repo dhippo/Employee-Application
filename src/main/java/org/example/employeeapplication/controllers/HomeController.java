@@ -3,6 +3,7 @@ package org.example.employeeapplication.controllers;
 import org.example.employeeapplication.entities.Employee;
 import org.example.employeeapplication.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,6 @@ public class HomeController {
 
     @Autowired
     private EmployeeService employeeService;
-
 
 
     @PostMapping("/addEmployee")
@@ -41,6 +41,13 @@ public class HomeController {
         List<Employee> employees = employeeService.getAllEmployees();
         model.addAttribute("employees", employees);
         return "home";
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Employee>> search(@RequestParam String term) {
+        List<Employee> employees = employeeService.searchByName(term);
+
+        return ResponseEntity.ok(employees);
     }
 
 }
