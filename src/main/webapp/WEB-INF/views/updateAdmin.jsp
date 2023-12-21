@@ -13,6 +13,7 @@
 
         <form action="/updateAdmin" method="post" class="space-y-4">
             <input type="hidden" name="id" value="${employee.id}"/>
+            <input type="hidden" name="admin" value="1"/>
 
             <!-- Reste du formulaire identique à updateEmployee -->
             <h1 class="text-medium mb-6">Prénom:</h1>

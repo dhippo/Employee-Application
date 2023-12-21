@@ -189,7 +189,7 @@
                 <%--                file deroulante--%>
                 <div class="flex space-x-3">
                     <select name="filterPole" class="px-3 py-2 w-40 border border-gray-300 text-neutral-400 rounded-md focus:outline-none focus:ring focus:border-blue-500">
-                        <option value="" >Slectionner</option>
+                        <option value="" >Selectionner</option>
                         <option value="Autre" >Autre</option>
                         <option value="commercial" >Commercial et Marketing</option>
                         <option value="financial" >Financier</option>
@@ -205,6 +205,7 @@
                     </select>
 
                     <button type="submit" class="bg-orange-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700">Valider</button>
+                    <a href="/" class="bg-gray-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700">Réinitialiser</a>
                 </div>
 
             </form>

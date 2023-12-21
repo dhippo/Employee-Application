@@ -1,6 +1,7 @@
 package org.example.employeeapplication.controllers;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.example.employeeapplication.entities.Employee;
 import org.example.employeeapplication.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -161,8 +162,10 @@ public class HomeController {
     }
 
     @GetMapping("/updateAdmin")
-    public String showUpdateAdminPage(@RequestParam("id") Long id, Model model) {
+    public String showUpdateAdminPage(@RequestParam("id") Long id, Model model, HttpSession session) {
         Employee employee = employeeService.findEmployeeById(id);
+        session.setAttribute("userEmail", employee.getEmail());
+        session.setAttribute("isAdmin", employee.isAdmin());
         if (!employee.isAdmin()) {
             return "redirect:/"; // Rediriger vers l'accueil si l'employé n'est pas un admin
         }
