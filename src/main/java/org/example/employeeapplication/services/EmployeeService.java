@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,4 +61,47 @@ public class EmployeeService {
 
         return null;
     }
+
+
+
+    public Employee login(String email, String password) {
+        Employee employee = employeeRepo.findByEmail(email);
+        if (employee != null && employee.getPassword().equals(password)) {
+            return employee;
+        }
+        return null;
+    }
+    public Employee findEmployeeById(Long id) {
+        return employeeRepo.findById(id).orElse(null);
+    }
+    public Employee findByEmail(String email) {
+        return employeeRepo.findByEmail(email);
+    }
+
+    public long countAllEmployees() {
+        return employeeRepo.count();
+    }
+
+
+    public Employee updateEmployee(Employee employee) {
+        // Assuming the employee with the given ID already exists
+        return employeeRepo.save(employee);
+    }
+    public void deleteEmployeeById(Long id) {
+        employeeRepo.deleteById(id);
+    }
+
+
+    public long countEmployeesThisMonth() {
+        LocalDate now = LocalDate.now();
+        LocalDate startOfMonth = now.withDayOfMonth(1);
+        LocalDate endOfMonth = now.withDayOfMonth(now.lengthOfMonth());
+        return employeeRepo.countEmployeesThisMonth(startOfMonth, endOfMonth);
+    }
+
+    public long countAdminEmployees() {
+        return employeeRepo.countByAdmin(true);
+    }
+
+
 }
