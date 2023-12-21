@@ -5,6 +5,20 @@
 <head>
     <title>Modifier Administrateur</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script type="text/javascript">
+        function showNewPasswordFields() {
+            var currentPasswordField = document.getElementById("currentPassword");
+            var newPasswordField = document.getElementById("newPassword");
+            var confirmNewPasswordField = document.getElementById("confirmNewPassword");
+            if (currentPasswordField.value.length > 0) {
+                newPasswordField.style.display = "block";
+                confirmNewPasswordField.style.display = "block";
+            } else {
+                newPasswordField.style.display = "none";
+                confirmNewPasswordField.style.display = "none";
+            }
+        }
+    </script>
 </head>
 <body>
 <div class="w-full flex justify-center">
@@ -31,9 +45,15 @@
                 <input type="email" name="email" value="${employee.email}" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300" />
             </div>
 
-            <h1 class="text-medium mb-6">Mot de passe:</h1>
+            <h1 class="text-medium mb-6">Modification Mot de Passe:</h1>
             <div>
-                <input type="password" name="password" placeholder="Laisser vide si inchangé" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300" />
+                <input type="password" id="currentPassword" name="currentPassword" placeholder="Rentrer votre mot de passe actuel ou laissé vide pour ne pas modifier" oninput="showNewPasswordFields()" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300" />
+            </div>
+            <div id="newPassword" style="display:none;">
+                <input type="password" name="newPassword" placeholder="Nouveau mot de passe" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300" />
+            </div>
+            <div id="confirmNewPassword" style="display:none;">
+                <input type="password" name="confirmNewPassword" placeholder="Confirmer nouveau mot de passe" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300" />
             </div>
 
             <h1 class="text-medium mb-6">Numéro de téléphone:</h1>

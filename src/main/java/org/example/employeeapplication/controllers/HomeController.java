@@ -174,15 +174,44 @@ public class HomeController {
     }
 
     @PostMapping("/updateAdmin")
-    public String updateAdmin(@ModelAttribute Employee employee, RedirectAttributes redirectAttributes) {
-        try {
-            // Mise à jour de l'administrateur
-            employeeService.updateEmployee(employee); // Assurez-vous que cette méthode gère correctement les mises à jour d'admin
-            redirectAttributes.addFlashAttribute("successMessage", "Administrateur mis à jour avec succès.");
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Erreur lors de la mise à jour de l'administrateur.");
+    public String updateAdminProfile(@RequestParam Long id,
+                                     @RequestParam String firstName,
+                                     @RequestParam String lastName,
+                                     @RequestParam String email,
+                                     @RequestParam String employeePhone,
+                                     @RequestParam String hireDate,
+                                     @RequestParam String pole,
+                                     @RequestParam String role,
+                                     @RequestParam String currentPassword,
+                                     @RequestParam(required = false) String newPassword,
+                                     @RequestParam(required = false) String confirmNewPassword,
+                                     Model model) {
+
+        Employee employee = employeeService.findById(id);
+        if (employee == null) {
+            model.addAttribute("errorMessage", "Employé non trouvé.");
+            return "redirect:/";
         }
+
+        if (!currentPassword.isEmpty() && !currentPassword.equals(employee.getPassword())) {
+            model.addAttribute("errorMessage", "Mot de passe actuel incorrect.");
+            return "redirect:/";
+        }
+
+        if (!newPassword.isEmpty()) {
+            if (newPassword.equals(confirmNewPassword)) {
+                employee.setPassword(newPassword); // Mise à jour directe sans cryptage
+            } else {
+                model.addAttribute("errorMessage", "Les nouveaux mots de passe ne correspondent pas.");
+                return "redirect:/";
+            }
+        }
+
+        employeeService.updateEmployeeDetails(employee, firstName, lastName, email, employeePhone, hireDate, pole, role);
+        employeeService.save(employee);
+        model.addAttribute("successMessage", "Profil mis à jour avec succès.");
         return "redirect:/";
     }
-
 }
+
+

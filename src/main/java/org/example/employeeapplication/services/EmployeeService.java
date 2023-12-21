@@ -10,8 +10,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -20,6 +23,8 @@ public class EmployeeService {
 
     @Autowired
     private EmployeeRepo employeeRepo;
+
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public void addEmployee(Employee employee) {
         employeeRepo.save(employee);
@@ -99,9 +104,40 @@ public class EmployeeService {
         return employeeRepo.countEmployeesThisMonth(startOfMonth, endOfMonth);
     }
 
+
     public long countAdminEmployees() {
         return employeeRepo.countByAdmin(true);
     }
 
+    public Employee findById(Long id) {
+        return employeeRepo.findById(id).orElse(null);
+    }
+
+    public void save(Employee employee) {
+        employeeRepo.save(employee);
+    }
+
+    public void updateEmployeeDetails(Employee employee, String firstName, String lastName, String email, String employeePhone, String hireDate, String pole, String role) {
+        employee.setFirstName(firstName);
+        employee.setLastName(lastName);
+        employee.setEmail(email);
+
+        try {
+            employee.setEmployeePhone(Long.parseLong(employeePhone));
+        } catch (NumberFormatException e) {
+            // Gérer l'erreur de conversion ici
+        }
+
+        try {
+            Date parsedDate = dateFormat.parse(hireDate);
+            employee.setHireDate(new java.sql.Date(parsedDate.getTime()));
+        } catch (ParseException e) {
+            // Gérer l'erreur de parsing de la date ici
+        }
+
+        employee.setPole(pole);
+        employee.setRole(role);
+    }
 
 }
+
